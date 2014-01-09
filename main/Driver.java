@@ -57,10 +57,10 @@ public class Driver {
 		initGL(); //must come before any other graphics stuff
 		Block.init();
 		Tool.init();
-
+		//map = new World("New Map");
 		//map.save();
-		
-		//map.load("New Map");
+		map = new World();
+		map.load("New Map");
 		//player = new Player(WIDTH/2,/*Block.getHeightAtX(chunk, (WIDTH/2)/30)+1*/450, "PNG", "person3.png");
 		while (!Display.isCloseRequested()) {
 			try {
@@ -111,7 +111,6 @@ public class Driver {
 				case "continue":
 					System.out.println("continue");
 					inGame=true;
-					map = new World();
 					player = Player.fromFile("player");
 					changeX(-player.getX() + WIDTH/2);
 					break;
@@ -121,18 +120,17 @@ public class Driver {
 					break;
 				case "new":
 					System.out.println("new");
-					inGame=true;
-					player = new Player(WIDTH/2, HEIGHT/2, "PNG", "person1.png");
-					map = new World("New Map");
+					player = new Player(WIDTH/2, HEIGHT/2, "PNG", "person3");
 					break;
 				}
 			}
 		} else {
+
 			GL11.glTranslated(x,y,0);
+
 			drawWorld(map);
 			player.update();
 			drawPlayer(player);
-			
 		}
 		Display.sync(60);
 		Display.update();
