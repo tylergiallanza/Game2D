@@ -77,6 +77,8 @@ public class Player extends GameObject implements Gravity{
 		if(x > Driver.WIDTH/2 - REACH && x < Driver.WIDTH/2 + REACH + width){
 			if(y > Driver.HEIGHT/2 - REACH && y < Driver.HEIGHT/2 + REACH + height){
 				Block.getBlock(x, y).breakTime--;
+				if(Block.getBlock(x,y).hasAnimation())
+					Block.getBlock(x,y).breakAnimation();
 				if(Block.getBlock(x, y).breakTime <= 0)
 					deleteAtMouse(x, y);
 			}

@@ -30,16 +30,19 @@ public class Driver {
 	 * @TODO
 	 *       - Add swag
 	 *       - Make file-reading also re-write tile data
-	 *       - Add breaking block animation
+	 *       - Add breaking block animation for grass and wood
 	 *       - Water?
 	 *       - Add support for multiple save files
 	 *       - Add load button functionality
 	 *       - Add new tools
+	 *       
 	 */
 
 	/**
 	 * @BUGFIXES
-	 *           - Fix image stretch error
+	 *           - Fix GUI image stretch error
+	 *           - Fix block animations sticking if the block isn't broken
+	 *           - Make block animations more obvious
 	 */
 
 	private static double x;

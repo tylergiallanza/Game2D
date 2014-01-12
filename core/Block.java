@@ -139,4 +139,19 @@ public class Block extends GameObject {
 		return 1;
 	}
 
+	public boolean hasAnimation() {
+		if(type.equals("stone")) return true;
+		return false;
+	}
+
+	public void breakAnimation() {
+		int finalTime = linkTime(getType());
+		if(breakTime<finalTime*0.2) texture = loadTexture("PNG",getType()+"5.png");
+		else if(breakTime<finalTime*0.4) texture = loadTexture("PNG",getType()+"4.png");
+		else if(breakTime<finalTime*0.6) texture = loadTexture("PNG",getType()+"3.png");
+		else if(breakTime<finalTime*0.8) texture = loadTexture("PNG",getType()+"2.png");
+		else if(breakTime<finalTime)loadTexture("PNG",getType()+"1.png");
+		
+	}
+
 }
