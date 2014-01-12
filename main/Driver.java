@@ -31,6 +31,7 @@ public class Driver {
 	 *       - Add swag
 	 *       - Make file-reading also re-write tile data
 	 *       - Add breaking block animation
+	 *       - Water?
 	 *       - Add support for multiple save files
 	 *       - Add load button functionality
 	 *       - Add new tools
@@ -38,7 +39,7 @@ public class Driver {
 
 	/**
 	 * @BUGFIXES
-	 *           - Fix upside-down error
+	 *           - Fix image stretch error
 	 */
 
 	private static double x;
@@ -57,11 +58,6 @@ public class Driver {
 		initGL(); //must come before any other graphics stuff
 		Block.init();
 		Tool.init();
-		//map = new World("New Map");
-		//map.save();
-		map = new World();
-		map.load("New Map");
-		//player = new Player(WIDTH/2,/*Block.getHeightAtX(chunk, (WIDTH/2)/30)+1*/450, "PNG", "person3.png");
 		while (!Display.isCloseRequested()) {
 			try {
 				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);  //wipe the screen        
@@ -96,7 +92,7 @@ public class Driver {
 
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
-		GL11.glOrtho(0,WIDTH,HEIGHT,0,1,-1);
+		GL11.glOrtho(0,WIDTH,0,HEIGHT,1,-1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
 	}
@@ -111,6 +107,8 @@ public class Driver {
 				case "continue":
 					System.out.println("continue");
 					inGame=true;
+					map = new World();
+					map.load("New Map");
 					player = Player.fromFile("player");
 					changeX(-player.getX() + WIDTH/2);
 					break;
@@ -120,7 +118,9 @@ public class Driver {
 					break;
 				case "new":
 					System.out.println("new");
-					player = new Player(WIDTH/2, HEIGHT/2, "PNG", "person3");
+					player = new Player(WIDTH/2, HEIGHT/2, "PNG", "person3.png");
+					map = new World("New Map");
+					inGame=true;
 					break;
 				}
 			}

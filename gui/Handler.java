@@ -31,8 +31,7 @@ public class Handler {
 	public static void checkMouse() {
 		if (Mouse.isButtonDown(0)) {
 			for (Button b : buttons) {
-				
-				if (b.isClicked(Driver.WIDTH-Mouse.getX(),Driver.HEIGHT-Mouse.getY()))
+				if (b.isClicked(Mouse.getX(),Mouse.getY()))
 					clicked = b;
 				
 			}
@@ -46,11 +45,11 @@ public class Handler {
 	public static void drawMenu(String type) throws IOException {
 		switch (type) {
 		case "Start":
-			new Button(Driver.WIDTH/2-250,(Driver.HEIGHT/10)*2-50,500,100,
+			new Button(Driver.WIDTH/2-250,(Driver.HEIGHT/10)*6+50,500,100,
 					"Continue Game","continue",first).draw();
-			new Button(Driver.WIDTH/2-250,(Driver.HEIGHT/10)*4-50,500,100,
+			new Button(Driver.WIDTH/2-250,(Driver.HEIGHT/10)*4+50,500,100,
 					"Load...","load",first).draw();
-			new Button(Driver.WIDTH/2-250,(Driver.HEIGHT/10)*6-50,500,100,
+			new Button(Driver.WIDTH/2-250,(Driver.HEIGHT/10)*2+50,500,100,
 					"New Game","new",first).draw();
 			if (first)
 				first = false;

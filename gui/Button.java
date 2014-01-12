@@ -18,7 +18,7 @@ public class Button {
 		x = xIn;y = yIn; width = widthIn;height = heightIn;
 		text = textIn;token = tokenIn;
 		if(first) Handler.register(this);
-		TextureLoader.getTexture("PNG", new FileInputStream(new File("button.png"))).bind();
+		TextureLoader.getTexture("PNG", new FileInputStream(new File(getID()+".png"))).bind();
 	}
 	public void draw() {
 		GL11.glBegin(GL11.GL_QUADS);
@@ -31,12 +31,9 @@ public class Button {
 		GL11.glTexCoord2f(0, 0);
 		GL11.glVertex2f(x,y+height);
 		GL11.glEnd();
-		drawFont(x+(width/2)-(text.length()*4),y+(height/2)-15,text);
+		
 	}
-	private static void drawFont(int x, int y, String text) {
-		TrueTypeFont font = new TrueTypeFont(new Font("Times New Roman", Font.BOLD, 24),false);
-		font.drawString(x,y,text,Color.white);
-	}
+
 	public boolean isClicked(int xIn, int yIn) {
 		//System.out.println(((xIn>=x && xIn<=x+width) && (yIn>=y && yIn<=y+height)));
 		return ((xIn>=x && xIn<=x+width) && (yIn>=y && yIn<=y+height));
