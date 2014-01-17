@@ -22,6 +22,7 @@ public class Player extends GameObject implements Gravity{
 	private boolean direction;
 	private Inventory inventory;
 	private int inventorySlot = 0;
+	private boolean breaking = false;
 
 	public Player(int x, int y, String type, String name) {
 		inventory = new Inventory();
@@ -76,11 +77,13 @@ public class Player extends GameObject implements Gravity{
 		if(!canBreak(Block.getBlock(x, y))) return;
 		if(x > Driver.WIDTH/2 - REACH && x < Driver.WIDTH/2 + REACH + width){
 			if(y > Driver.HEIGHT/2 - REACH && y < Driver.HEIGHT/2 + REACH + height){
+				if(getBlockAtMouse().breakTime == Block.linkTime(getBlockAtMouse().getType()))Driver.addBlock(Block.getBlock(Mouse.getX(), Mouse.getY()));
+				((Tool) getSelectedSlot()).rotate();
 				Block.getBlock(x, y).breakTime--;
-				if(Block.getBlock(x, y).breakTime <= 0)
+				if(Block.getBlock(x, y).breakTime <= 15){
 					deleteAtMouse(x, y);
-				else if(Block.getBlock(x,y).hasAnimation() && false)
-					Block.getBlock(x,y).breakAnimation();
+					((Tool) getSelectedSlot()).resetRotation();
+				}
 			}
 		}
 	}
@@ -268,6 +271,10 @@ public class Player extends GameObject implements Gravity{
 
 	public boolean getDirection(){
 		return direction;
+	}
+	
+	public Block getBlockAtMouse(){
+		return Block.getBlock(Mouse.getX(), Mouse.getY());
 	}
 
 }

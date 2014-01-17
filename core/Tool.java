@@ -46,5 +46,14 @@ public class Tool extends Item{
 	public static boolean isTool(String input){
 		return input.equals("pick") || input.equals("axe");
 	}
+	
+	public void rotate(){
+		rotation++;
+		if(rotation % 405 == 0) rotation = 45;
+	}
+	
+	public void resetRotation(){
+		rotation = 45;
+	}
 
 }

@@ -30,9 +30,6 @@ public class Driver {
 	 * @TODO
 	 *       - Add swag
 	 *       - Make file-reading also re-write tile data
-	 *       - Add breaking block animation for grass and wood
-	 *           **On the subject of block breaking, rather than having multiple textures i think
-	 *           **we should just overlay some sort of fade or something.
 	 *       - Water?
 	 *       - Add support for multiple save files
 	 *       - Add load button functionality
@@ -57,6 +54,9 @@ public class Driver {
 	public static final int TOOLWIDTH = 40;
 	public static final int TOOLHEIGHT = 40;
 	private static World map;
+	public static final boolean fullscreen = false;
+	private static ArrayList<Block> active = new ArrayList<Block>();
+	private static int frameCount = 0;
 
 	public static void main(String[] args) throws IOException {
 
@@ -81,8 +81,8 @@ public class Driver {
 	private static void initGL() {
 
 		try {
-			//	Display.setFullscreen(true);
-			Display.setDisplayMode(new DisplayMode(1200,800));
+			if(fullscreen) Display.setFullscreen(fullscreen);
+			else Display.setDisplayMode(new DisplayMode(1200,800));
 			Display.create();
 			WIDTH = Display.getWidth();
 			HEIGHT = Display.getHeight();
@@ -136,6 +136,8 @@ public class Driver {
 			drawWorld(map);
 			player.update();
 			drawPlayer(player);
+			frameCount++;
+			updateActiveBlocks();
 		}
 		Display.sync(60);
 		Display.update();
@@ -209,7 +211,8 @@ public class Driver {
 
 	private static void rect(int x, int y, int width, int height, double transparency) {
 		// draw the actual rectangle
-		GL11.glColor4f(1f, 1f, 1f, (float)transparency + .15f);
+		if(transparency < .15) transparency = .15;
+		GL11.glColor4f(1f, 1f, 1f, (float)transparency);
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glTexCoord2f(0,1);
 		GL11.glVertex2f(x,y);
@@ -225,6 +228,7 @@ public class Driver {
 	private static void tiltedrect(int x, int y, int width, int height,
 			int rotation) {
 		// draw the actual rectangle
+		GL11.glColor4f(1f, 1f, 1f, 1f);
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glTexCoord2f(0,1);
 		GL11.glVertex2f(x+width/2,y);
@@ -274,6 +278,23 @@ public class Driver {
 
 	public static Player getPlayer() {
 		return player;
+	}
+	
+	public static void addBlock(Block b){
+		active.add(b);
+	}
+	
+	public static void updateActiveBlocks(){
+		for(int i = active.size() - 1; i >= 0; i--){
+			if(active.get(i) == null){
+				active.remove(i);
+				continue;
+			}
+			if(active.get(i).breakTime < Block.linkTime(active.get(i).getType())){
+				if(!active.get(i).equals(player.getBlockAtMouse()) || !Mouse.isButtonDown(0))	active.get(i).breakTime+=2;
+			}else 
+				active.remove(i);
+		}
 	}
 
 }
