@@ -26,7 +26,7 @@ public class Block extends GameObject {
 	private static Texture grass;
 	private static Texture crate;
 	private static Texture tnt;
-	public static final int WOODBREAKTIME = 50;
+	public static final int WOODBREAKTIME = 200;
 	public static final int STONEBREAKTIME = 100;
 	public static final int GRASSBREAKTIME = 40;
 

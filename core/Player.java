@@ -17,7 +17,7 @@ public class Player extends GameObject implements Gravity{
 	private double yVel = 0;
 	private static final int XVELOCITY = 3;
 	private final double GRAVITY = .4;
-	private final double JUMPVELOCITY = 7;
+	private final double JUMPVELOCITY = 8;
 	private boolean canJump = false;
 	private boolean direction;
 	private Inventory inventory;
@@ -90,13 +90,15 @@ public class Player extends GameObject implements Gravity{
 
 	private boolean deleteAtMouse(int x, int y) {
 		try {
+			String t = Driver.getWorld().getLoaded()[(int) ((x-Driver.getX())/30)][(int) ((y-Driver.getY())/30)].getType();
 			if (Driver.getWorld().getLoaded()[(int) ((x-Driver.getX())/30)][(int) ((y-Driver.getY())/30)].getType().equals("tnt"))
 				Explosion.explode(((int) ((x-Driver.getX())/30)),((int) ((y-Driver.getY())/30)));
 			if (!Driver.getWorld().getLoaded()[(int) ((x-Driver.getX())/30)][(int) ((y-Driver.getY())/30)].getType().equals("indestructable")){
-				String t = Driver.getWorld().getLoaded()[(int) ((x-Driver.getX())/30)][(int) ((y-Driver.getY())/30)].getType();
 				Driver.getWorld().getLoaded()[(int) ((x-Driver.getX())/30)][(int) ((y-Driver.getY())/30)] = null;
 				Driver.getWorld().getTileInfo().add(new Tile(x - Driver.getX(), y - Driver.getY(), t));
 			}
+			if(t.equals("wood") && Block.getBlock(x, y+Block.HEIGHT).getType().equals("wood"))
+				deleteAtMouse(x, y + Block.HEIGHT);
 		} catch (Exception e) {
 			return false;
 		}
@@ -275,6 +277,10 @@ public class Player extends GameObject implements Gravity{
 	
 	public Block getBlockAtMouse(){
 		return Block.getBlock(Mouse.getX(), Mouse.getY());
+	}
+	
+	public Inventory getInventory(){
+		return inventory;
 	}
 
 }

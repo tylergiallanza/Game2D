@@ -57,6 +57,7 @@ public class Driver {
 	public static final boolean fullscreen = false;
 	private static ArrayList<Block> active = new ArrayList<Block>();
 	private static int frameCount = 0;
+	public static final int INVENTORY_ICON_WIDTH = 40;
 
 	public static void main(String[] args) throws IOException {
 
@@ -134,6 +135,7 @@ public class Driver {
 			GL11.glTranslated(x,y,0);
 
 			drawWorld(map);
+			drawInventory(player.getInventory());
 			player.update();
 			drawPlayer(player);
 			frameCount++;
@@ -295,6 +297,19 @@ public class Driver {
 				if(!active.get(i).equals(player.getBlockAtMouse()) || !Mouse.isButtonDown(0))	active.get(i).breakTime+=2;
 			}else 
 				active.remove(i);
+		}
+	}
+	
+	public static void drawInventory(Inventory inv){
+		int spot = (WIDTH/2) - ((INVENTORY_ICON_WIDTH+5) * 5);
+		for(int i = 0; i < 10; i++){
+			try{
+			Item item = inv.getData()[i];
+			new Tile(item, 0, 0).getTexture().bind();
+			rect(spot - (int)x, HEIGHT - INVENTORY_ICON_WIDTH - 10 - (int)y, INVENTORY_ICON_WIDTH, INVENTORY_ICON_WIDTH, 1);
+
+			} catch (NullPointerException n){}
+			spot += INVENTORY_ICON_WIDTH + 5;
 		}
 	}
 
