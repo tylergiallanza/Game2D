@@ -285,6 +285,7 @@ public class Driver {
 	}
 	
 	public static void updateActiveBlocks(){
+		if(active.size() == 0) return;
 		for(int i = active.size() - 1; i >= 0; i--){
 			if(active.get(i) == null){
 				active.remove(i);
