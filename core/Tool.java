@@ -8,12 +8,17 @@ public class Tool extends Item{
 	private static Texture pick1;
 	private Texture texture;
 	private int rotation;
+	private int maxRotation;
+	public static final int DEFAULT_ROTATION = 0;
+	public static final int PICK_ROTATION = 45;
+	public static final int AXE_ROTATION = 45;
 	
 	public Tool() {
 		type = "axe";
 		stack = false;
 		texture = axe1;
-		rotation = 45;
+		rotation = DEFAULT_ROTATION;
+		maxRotation = linkMaxRotation(type);
 		count = 1;
 	}
 	
@@ -21,8 +26,9 @@ public class Tool extends Item{
 		this.type = type;
 		stack = false;
 		texture = linkTexture(type);
-		rotation = 45;
+		rotation = DEFAULT_ROTATION;
 		count = 1;
+		maxRotation = linkMaxRotation(type);
 	}
 	
 	public static void init(){
@@ -47,13 +53,18 @@ public class Tool extends Item{
 		return input.equals("pick") || input.equals("axe");
 	}
 	
-	public void rotate(){
-		rotation++;
-		if(rotation % 405 == 0) rotation = 45;
+	public void rotate(boolean right){
+		rotation+= (right)? -3 : 3;
+		if(Math.abs(rotation) > maxRotation) rotation = DEFAULT_ROTATION;
 	}
 	
 	public void resetRotation(){
-		rotation = 45;
+		rotation = DEFAULT_ROTATION;
+	}
+	
+	private static        int linkMaxRotation(String type){
+		if(type.equals("pick")) return PICK_ROTATION;
+		return AXE_ROTATION;
 	}
 
 }

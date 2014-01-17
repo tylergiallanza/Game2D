@@ -40,7 +40,6 @@ public class Driver {
 	/**
 	 * @BUGFIXES
 	 *           - Fix GUI image stretch error
-	 *           - Fix block animations sticking if the block isn't broken
 	 *           - Make block animations more obvious
 	 */
 
@@ -56,7 +55,6 @@ public class Driver {
 	private static World map;
 	public static final boolean fullscreen = false;
 	private static ArrayList<Block> active = new ArrayList<Block>();
-	private static int frameCount = 0;
 	public static final int INVENTORY_ICON_WIDTH = 40;
 
 	public static void main(String[] args) throws IOException {
@@ -138,7 +136,6 @@ public class Driver {
 			drawInventory(player.getInventory());
 			player.update();
 			drawPlayer(player);
-			frameCount++;
 			updateActiveBlocks();
 		}
 		Display.sync(60);
@@ -230,6 +227,9 @@ public class Driver {
 	private static void tiltedrect(int x, int y, int width, int height,
 			int rotation) {
 		// draw the actual rectangle
+		GL11.glTranslatef(x + width/2, y, 0.0f);
+        GL11.glRotatef(rotation, 0.0f, 0.0f, 1.0f);
+        GL11.glTranslatef(-x - width/2, -y, 0.0f);
 		GL11.glColor4f(1f, 1f, 1f, 1f);
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glTexCoord2f(0,1);
@@ -289,14 +289,12 @@ public class Driver {
 	public static void updateActiveBlocks(){
 		if(active.size() == 0) return;
 		for(int i = active.size() - 1; i >= 0; i--){
-			if(active.get(i) == null){
-				active.remove(i);
-				continue;
-			}
+			try{
 			if(active.get(i).breakTime < Block.linkTime(active.get(i).getType())){
 				if(!active.get(i).equals(player.getBlockAtMouse()) || !Mouse.isButtonDown(0))	active.get(i).breakTime+=2;
 			}else 
 				active.remove(i);
+			} catch(Exception e){active.remove(i);}
 		}
 	}
 	
@@ -308,7 +306,7 @@ public class Driver {
 			new Tile(item, 0, 0).getTexture().bind();
 			rect(spot - (int)x, HEIGHT - INVENTORY_ICON_WIDTH - 10 - (int)y, INVENTORY_ICON_WIDTH, INVENTORY_ICON_WIDTH, 1);
 
-			} catch (NullPointerException n){}
+			} catch (Exception e){}
 			spot += INVENTORY_ICON_WIDTH + 5;
 		}
 	}

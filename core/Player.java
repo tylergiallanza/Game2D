@@ -78,7 +78,7 @@ public class Player extends GameObject implements Gravity{
 		if(x > Driver.WIDTH/2 - REACH && x < Driver.WIDTH/2 + REACH + width){
 			if(y > Driver.HEIGHT/2 - REACH && y < Driver.HEIGHT/2 + REACH + height){
 				if(getBlockAtMouse().breakTime == Block.linkTime(getBlockAtMouse().getType()))Driver.addBlock(Block.getBlock(Mouse.getX(), Mouse.getY()));
-				((Tool) getSelectedSlot()).rotate();
+				((Tool) getSelectedSlot()).rotate(getDirection());
 				Block.getBlock(x, y).breakTime--;
 				if(Block.getBlock(x, y).breakTime <= 15){
 					deleteAtMouse(x, y);
@@ -246,7 +246,7 @@ public class Player extends GameObject implements Gravity{
 	private void checkTiles(){
 		for(int i = 0; i < Driver.getWorld().getTileInfo().size(); i++){
 			Tile t = Driver.getWorld().getTileInfo().get(i);
-			if(Math.abs(t.xPos - xPos) < 40 && Math.abs(t.yPos - yPos) < 40){
+			if(Math.abs(t.xPos - width/2 - xPos) < 60 && Math.abs(t.yPos - height/2 - yPos) < 60){
 				if(inventory.add(new Item(t))){
 					Driver.getWorld().getTileInfo().remove(i);
 				}
