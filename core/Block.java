@@ -132,7 +132,7 @@ public class Block extends GameObject {
 		return "any";
 	}
 	
-	private static int linkTime(String type){
+	public static int linkTime(String type){
 		if(type.equals("wood")) return WOODBREAKTIME;
 		if(type.equals("stone")) return STONEBREAKTIME;
 		if(type.equals("grass")) return GRASSBREAKTIME;

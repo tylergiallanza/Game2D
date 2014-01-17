@@ -31,6 +31,8 @@ public class Driver {
 	 *       - Add swag
 	 *       - Make file-reading also re-write tile data
 	 *       - Add breaking block animation for grass and wood
+	 *           **On the subject of block breaking, rather than having multiple textures i think
+	 *           **we should just overlay some sort of fade or something.
 	 *       - Water?
 	 *       - Add support for multiple save files
 	 *       - Add load button functionality
@@ -149,10 +151,10 @@ public class Driver {
 		try {
 			obj.getTexture().bind();
 			if (obj.getDirection())
-				rect(obj.getX(),obj.getY(),obj.getWidth(),obj.getHeight());
+				rect(obj.getX(),obj.getY(),obj.getWidth(),obj.getHeight(), 1);
 			else
 				rect(obj.getX()+obj.getWidth(),obj.getY(),-obj.getWidth(),
-						obj.getHeight());
+						obj.getHeight(), 1);
 			if (((Player) obj).getSelectedSlot() instanceof Tool)
 				draw(((Tool) ((Player) obj).getSelectedSlot()),
 						obj.getDirection());
@@ -168,7 +170,8 @@ public class Driver {
 	private static boolean draw(GameObject obj) {
 		try {
 			obj.getTexture().bind();
-			rect(obj.getX(),obj.getY(),obj.getWidth(),obj.getHeight());
+			if(obj instanceof Block) rect(obj.getX(),obj.getY(),obj.getWidth(),obj.getHeight(), (double)((Block) obj).breakTime/(Block.linkTime(((Block) obj).getType())));
+			else rect(obj.getX(),obj.getY(),obj.getWidth(),obj.getHeight(), 1);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -204,8 +207,9 @@ public class Driver {
 		return map;
 	}
 
-	private static void rect(int x, int y, int width, int height) {
+	private static void rect(int x, int y, int width, int height, double transparency) {
 		// draw the actual rectangle
+		GL11.glColor4f(1f, 1f, 1f, (float)transparency + .15f);
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glTexCoord2f(0,1);
 		GL11.glVertex2f(x,y);

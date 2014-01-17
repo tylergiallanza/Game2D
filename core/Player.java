@@ -79,7 +79,7 @@ public class Player extends GameObject implements Gravity{
 				Block.getBlock(x, y).breakTime--;
 				if(Block.getBlock(x, y).breakTime <= 0)
 					deleteAtMouse(x, y);
-				else if(Block.getBlock(x,y).hasAnimation())
+				else if(Block.getBlock(x,y).hasAnimation() && false)
 					Block.getBlock(x,y).breakAnimation();
 			}
 		}
