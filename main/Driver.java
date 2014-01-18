@@ -46,7 +46,7 @@ public class Driver {
 	private static double x;
 	private static double y;
 	private static Player player;
-	private static boolean inGame = false;
+	public static String gameState = "start";
 	public static final int WORLDWIDTH = 3;
 	public static int WIDTH = 1200;
 	public static int HEIGHT = 900;
@@ -103,29 +103,43 @@ public class Driver {
 
 	private static void update() throws IOException {
 		GL11.glPushMatrix();
-		if (!inGame) {
+		if (gameState.equals("start")) {
 			Handler.update();
 			Handler.drawMenu("Start");
 			if (Handler.getChoice()!=null) {
 				switch (Handler.getChoice().getID()) {
 				case "continue":
 					System.out.println("continue");
-					inGame=true;
+					gameState = "inGame";
 					map = new World();
-					map.load("New Map");
+					map.load("NewMap0");
 					player = Player.fromFile("player");
 					changeX(-player.getX() + WIDTH/2);
 					break;
 				case "load":
 					System.out.println("Sorry, I don't have functionality.");
-					inGame=true;
+					gameState = "loadMaps";
 					break;
 				case "new":
 					System.out.println("new");
 					player = new Player(WIDTH/2, HEIGHT/2, "PNG", "person3.png");
-					map = new World("New Map");
-					inGame=true;
+					map = new World("NewMap" + getMaps().length);
+					gameState = "inGame";
 					break;
+				}
+			}
+		} else if(gameState == "loadMaps"){
+			Handler.drawMenu("Load");
+			Handler.update();
+			if(Handler.getChoice() != null){
+				for(String s : getMaps()){
+					System.out.println(Handler.getChoice().getText() + "," + s);
+					if(Handler.getChoice().getText().equals(s)){
+						map = new World();
+						map.load(s);
+						player = Player.fromFile("player");
+						gameState = "inGame";
+					}
 				}
 			}
 		} else {
@@ -309,6 +323,14 @@ public class Driver {
 			} catch (Exception e){}
 			spot += INVENTORY_ICON_WIDTH + 5;
 		}
+	}
+	
+	public static String[] getMaps(){
+		File[] files = new File("maps").listFiles();
+		String[] s = new String[files.length];
+		for(int i = 0; i < files.length; i++)
+			s[i] = files[i].getName();
+		return s;
 	}
 
 }

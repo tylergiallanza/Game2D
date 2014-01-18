@@ -25,8 +25,7 @@ public class World {
 	}
 
 	public void load(String name){
-		folderName = name;
-		data = fromFile(name);
+		data = fromFile("maps/" + name);
 	}
 
 	public Block[][] getLoaded(){
@@ -34,10 +33,11 @@ public class World {
 	}
 
 	public void save(){
-		toFile(data, folderName);
+		toFile(data, "maps/" + folderName);
 	}
 
 	public static Block[][] fromFile(String fileName){
+		System.out.println("loading block data from: " + fileName);
 		Block[][] map = new Block[WIDTH][HEIGHT];
 		try{
 			Scanner readMap = new Scanner(new File(fileName));
@@ -59,7 +59,9 @@ public class World {
 					countY++;
 				}
 				countX++;
+				readLine.close();
 			}
+			readMap.close();
 		}catch(Exception e){System.out.println("Failed to load map"); e.printStackTrace(); return null; }
 		return map;
 	}
@@ -77,12 +79,12 @@ public class World {
 			r += "\n";
 		}
 		try{
-			File file = new File(fileName);
-			FileWriter writer = new FileWriter(file);
+			File saveFile = new File(fileName);
+			FileWriter writer = new FileWriter(saveFile);
 			writer.write(r, 0, r.length());
 			writer.close();
-			return file;
-		} catch (Exception e){System.out.println("Failed to write chunk data"); return null;}
+			return saveFile;
+		} catch (Exception e){e.printStackTrace(); System.out.println("Failed to write chunk data"); return null;}
 
 	}
 

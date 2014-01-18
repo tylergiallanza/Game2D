@@ -22,7 +22,9 @@ public class Handler {
 	static boolean done = false;
 	static boolean first = true;
 	static Button clicked = null;
+	static boolean hasLoadedMaps = false;
 	static ArrayList<Button> buttons = new ArrayList<Button>();
+	static Button[] worldButtons;
 
 	public static void update() throws IOException {
 		checkMouse();
@@ -30,10 +32,17 @@ public class Handler {
 
 	public static void checkMouse() {
 		if (Mouse.isButtonDown(0)) {
-			for (Button b : buttons) {
-				if (b.isClicked(Mouse.getX(),Mouse.getY()))
-					clicked = b;
-				
+			if(Driver.gameState.equals("start")){
+				for (Button b : buttons) {
+					if (b.isClicked(Mouse.getX(),Mouse.getY()))
+						clicked = b;
+
+				}
+			} else {
+				for(Button b : worldButtons){
+					if(b.isClicked(Mouse.getX(), Mouse.getY()))
+						clicked = b;
+				}
 			}
 		}
 	}
@@ -53,6 +62,23 @@ public class Handler {
 					"New Game","new",first).draw();
 			if (first)
 				first = false;
+			break;
+		case "Load":
+			if(!hasLoadedMaps){
+				String[] maps = Driver.getMaps();
+				int numMaps = maps.length;
+				worldButtons = new Button[numMaps];
+				int buttonY = Driver.HEIGHT/2 - 55 * numMaps;
+				int buttonX = Driver.WIDTH/2 - 250;
+				for(int i = 0; i < numMaps; i++){
+					worldButtons[i] = new Button(buttonX, buttonY, 500, 100, maps[i], "MAP_" + maps[i], false);
+					buttonY += 110;
+				}
+				hasLoadedMaps = true;
+			} else {
+				for(Button b : worldButtons)
+					b.draw();
+			}
 			break;
 		}
 	}

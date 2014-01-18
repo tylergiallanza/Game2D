@@ -18,7 +18,8 @@ public class Button {
 		x = xIn;y = yIn; width = widthIn;height = heightIn;
 		text = textIn;token = tokenIn;
 		if(first) Handler.register(this);
-		TextureLoader.getTexture("PNG", new FileInputStream(new File(getID()+".png"))).bind();
+		if(getID().contains("MAP")) TextureLoader.getTexture("PNG", new FileInputStream(new File("worldButton.png")));
+		else TextureLoader.getTexture("PNG", new FileInputStream(new File(getID()+".png"))).bind();
 	}
 	public void draw() {
 		GL11.glBegin(GL11.GL_QUADS);
@@ -45,5 +46,9 @@ public class Button {
 	
 	public String getID() {
 		return token;
+	}
+	
+	public String getText(){
+		return text;
 	}
 }
