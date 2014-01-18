@@ -31,16 +31,14 @@ public class Driver {
 	 *       - Add swag
 	 *       - Make file-reading also re-write tile data
 	 *       - Water?
-	 *       - Add support for multiple save files
-	 *       - Add load button functionality
-	 *       - Add new tools
-	 *       
+	 *       - Add world-specific player files
+	 *       - Add new tools    
 	 */
 
 	/**
 	 * @BUGFIXES
-	 *           - Fix GUI image stretch error
-	 *           - Make block animations more obvious
+	 *       - Fix GUI image stretch error
+	 *       - Worlds cannot save (FileNotFoundException : maps (Access is denied))
 	 */
 
 	private static double x;
@@ -319,7 +317,6 @@ public class Driver {
 			Item item = inv.getData()[i];
 			new Tile(item, 0, 0).getTexture().bind();
 			rect(spot - (int)x, HEIGHT - INVENTORY_ICON_WIDTH - 10 - (int)y, INVENTORY_ICON_WIDTH, INVENTORY_ICON_WIDTH, 1);
-
 			} catch (Exception e){}
 			spot += INVENTORY_ICON_WIDTH + 5;
 		}

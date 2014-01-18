@@ -25,13 +25,15 @@ public class Handler {
 	static boolean hasLoadedMaps = false;
 	static ArrayList<Button> buttons = new ArrayList<Button>();
 	static Button[] worldButtons;
+	private static long lastClick = 0;
 
 	public static void update() throws IOException {
 		checkMouse();
 	}
 
 	public static void checkMouse() {
-		if (Mouse.isButtonDown(0)) {
+		if (Mouse.isButtonDown(0) && System.currentTimeMillis() - lastClick > 100) {
+			lastClick = System.currentTimeMillis();
 			if(Driver.gameState.equals("start")){
 				for (Button b : buttons) {
 					if (b.isClicked(Mouse.getX(),Mouse.getY()))
