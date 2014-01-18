@@ -62,7 +62,7 @@ public class Tool extends Item{
 		rotation = DEFAULT_ROTATION;
 	}
 	
-	private static        int linkMaxRotation(String type){
+	public static int linkMaxRotation(String type){
 		if(type.equals("pick")) return PICK_ROTATION;
 		return AXE_ROTATION;
 	}

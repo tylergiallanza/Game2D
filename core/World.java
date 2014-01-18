@@ -100,7 +100,8 @@ public class World {
 			}
 			if(Math.random() < .1 && !treeLeft){
 				System.out.println("Planting tree");
-				for(int k = start + 1; k < start + 7; k++){
+				int height = 4 + (int)(Math.random()*4);
+				for(int k = start + 1; k < start + height + 1; k++){
 					chunk[i][k] = new Block(i*Block.WIDTH, k*Block.HEIGHT, "wood");
 				}
 				treeLeft = true;
