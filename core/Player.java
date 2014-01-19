@@ -49,7 +49,7 @@ public class Player extends GameObject implements Gravity{
 		checkTiles();
 		if (Mouse.isButtonDown(0)) {
 			breakAtMouse(Mouse.getX(), Mouse.getY());
-		} else if(((Tool) getSelectedSlot()).getRotation() != Tool.linkMaxRotation(((Tool) getSelectedSlot()).getType()))
+		} else if(getSelectedSlot() instanceof Tool && ((Tool) getSelectedSlot()).getRotation() != Tool.linkMaxRotation(((Tool) getSelectedSlot()).getType()))
 			((Tool) getSelectedSlot()).resetRotation();
 		if (Mouse.isButtonDown(1)) {
 			if(placeAtMouse(Mouse.getX(),Mouse.getY()))

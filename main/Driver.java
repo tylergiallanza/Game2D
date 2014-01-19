@@ -33,12 +33,16 @@ public class Driver {
 	 *       - Water?
 	 *       - Add world-specific player files
 	 *       - Add new tools    
+	 *       - Update swing animation
 	 */
 
 	/**
 	 * @BUGFIXES
 	 *       - Fix GUI image stretch error
 	 *       - Worlds cannot save (FileNotFoundException : maps (Access is denied))
+	 *       - MAJOR: There is a resource leak which causes crashes over long periods of time
+	 *       it exists in the GUI menu and becomes a much bigger problem in-game... I'm looking
+	 *       into what could be causing it.
 	 */
 
 	private static double x;
