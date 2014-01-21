@@ -39,7 +39,6 @@ public class Driver {
 	/**
 	 * @BUGFIXES
 	 *       - Fix GUI image stretch error
-	 *       - Worlds cannot save (FileNotFoundException : maps (Access is denied))
 	 *       - MAJOR: There is a resource leak which causes crashes over long periods of time
 	 *       it exists in the GUI menu and becomes a much bigger problem in-game... I'm looking
 	 *       into what could be causing it.
@@ -119,7 +118,6 @@ public class Driver {
 					changeX(-player.getX() + WIDTH/2);
 					break;
 				case "load":
-					System.out.println("Sorry, I don't have functionality.");
 					gameState = "loadMaps";
 					break;
 				case "new":
@@ -130,7 +128,7 @@ public class Driver {
 					break;
 				}
 			}
-		} else if(gameState == "loadMaps"){
+		} else if(gameState.equals("loadMaps")){
 			Handler.drawMenu("Load");
 			Handler.update();
 			if(Handler.getChoice() != null){

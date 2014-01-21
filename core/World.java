@@ -25,6 +25,7 @@ public class World {
 	}
 
 	public void load(String name){
+		folderName = name;
 		data = fromFile("maps/" + name);
 	}
 
