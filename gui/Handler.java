@@ -1,23 +1,13 @@
 package gui;
 
-import java.awt.Font;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.opengl.TextureLoader;
 
-import core.GameObject;
 import main.Driver;
 
-@SuppressWarnings("deprecation")
 public class Handler {
 	static boolean done = false;
 	static boolean first = true;

@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 
 import main.Driver;
 
-import org.newdawn.slick.*;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 

@@ -1,16 +1,12 @@
 package gui;
 
-import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.TextureLoader;
 
-@SuppressWarnings("deprecation")
 public class Button {
 	int x, y, width, height;
 	String text, token;

@@ -4,24 +4,15 @@ import gui.*;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.*;
-import org.lwjgl.openal.*;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.Toolkit;
-import java.awt.Dimension;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
-import physics.Gravity;
 import core.*;
 
 public class Driver {
@@ -31,6 +22,7 @@ public class Driver {
 	 *       - Add swag
 	 *       - Make file-reading also re-write tile data
 	 *       - Water?
+	 *       - Make the 20 layers of rock less boring
 	 *       - Add world-specific player files
 	 *       - Add new tools    
 	 *       - Update swing animation

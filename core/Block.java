@@ -1,15 +1,9 @@
 package core;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FileInputStream;
-
 import main.Driver;
 
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
 
-import java.util.Scanner;
 
 public class Block extends GameObject {
 
