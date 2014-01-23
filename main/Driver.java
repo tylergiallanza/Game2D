@@ -70,7 +70,7 @@ public class Driver {
 
 	}
 
-	private static void initGL() {
+	public static void initGL() {
 
 		try {
 			if(fullscreen) Display.setFullscreen(fullscreen);
@@ -234,7 +234,7 @@ public class Driver {
 			int rotation) {
 		// draw the actual rectangle
 		GL11.glTranslatef(x + width/2, y, 0.0f);
-        GL11.glRotatef(rotation, 0.0f, 0.0f, 1.0f);
+		GL11.glRotatef(rotation, 0.0f, 0.0f, 1.0f);
         GL11.glTranslatef(-x - width/2, -y, 0.0f);
 		GL11.glColor4f(1f, 1f, 1f, 1f);
 		GL11.glBegin(GL11.GL_QUADS);

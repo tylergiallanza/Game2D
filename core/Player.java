@@ -236,7 +236,6 @@ public class Player extends GameObject implements Gravity {
 			Scanner readFile = new Scanner(new File(fileName));
 			int x = Integer.parseInt(readFile.nextLine().trim());
 			int y = Integer.parseInt(readFile.nextLine().trim());
-			readFile.close();
 			Inventory i = new Inventory();
 			for (int j = 0; j<Inventory.INVENTORYSIZE; j++) {
 				String line = readFile.nextLine();
@@ -249,6 +248,7 @@ public class Player extends GameObject implements Gravity {
 							.next()));
 				readLine.close();
 			}
+			readFile.close();
 			System.out.println(i);
 			return new Player(x,y,"PNG","person3.png",i);
 		} catch (Exception e) {
