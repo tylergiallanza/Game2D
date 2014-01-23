@@ -20,20 +20,21 @@ public class Driver {
 	/**
 	 * @TODO
 	 *       - Add swag
-	 *       - Make file-reading also re-write tile data
 	 *       - Water?
-	 *       - Make the 20 layers of rock less boring
+	 *       - Add new blocks
 	 *       - Add world-specific player files
-	 *       - Add new tools    
+	 *       - Add new tools (weapon?)
+	 *       - Add enemies  
 	 *       - Update swing animation
+	 *       - Fix lag
+	 *       - Add Don Quixote mode 
 	 */
 
 	/**
 	 * @BUGFIXES
 	 *       - Fix GUI image stretch error
-	 *       - MAJOR: There is a resource leak which causes crashes over long periods of time
-	 *       it exists in the GUI menu and becomes a much bigger problem in-game... I'm looking
-	 *       into what could be causing it.
+	 *       - Fix treegen over caves
+	 *       - Spawning should be on surface
 	 */
 
 	private static double x;

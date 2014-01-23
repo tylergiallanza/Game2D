@@ -5,10 +5,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
+import main.Driver;
+
 public class World {
 
-	public static final int WIDTH = 50;
-	public static final int HEIGHT = 40;
+	public static final int WIDTH = 200;
+	public static final int HEIGHT = 50;
 	private Block[][] data;
 	private ArrayList<Tile> tiles = new ArrayList<Tile>();
 	private String folderName;
@@ -112,6 +114,9 @@ public class World {
 				treeLeft = false;
 			}
 		}
+		int numCaves = (int)(Math.random() * WIDTH / 25);
+		for(int q = 0; q <= numCaves; q++)
+			chunk = this.createCave(chunk, (int)(Math.random() * WIDTH));
 		data = chunk;
 	}
 
@@ -156,6 +161,24 @@ public class World {
 
 		} catch(Exception e) {return false;}
 		return false;
+	}
+	
+	private Block[][] createCave(Block[][] map, int start){
+		boolean direction = Math.random() > .5;
+		int yVal = getHighestY(Block.WIDTH * start - 5, Driver.HEIGHT) / 30;
+		while(yVal > 5){
+			for(int i = -1; i <= 1; i++){
+				if(i + start < 0 || i + start >= WIDTH) continue;
+				for(int j = -1; j <= 1; j++){
+					if(j + yVal < 0 || j + yVal >= HEIGHT) continue;
+					map[i + start][j + yVal] = null;
+				}
+			}
+			yVal--;
+			start += (direction)? (int)(3 * Math.random()) : -(int)(3 * Math.random());
+			if(Math.random() < .2) direction = !direction;
+		}
+		return map;
 	}
 
 
