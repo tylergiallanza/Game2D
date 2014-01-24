@@ -9,8 +9,8 @@ import main.Driver;
 
 public class World {
 
-	public static final int WIDTH = 200;
-	public static final int HEIGHT = 50;
+	public static final int WIDTH = 50;
+	public static final int HEIGHT = 30;
 	private Block[][] data;
 	private ArrayList<Tile> tiles = new ArrayList<Tile>();
 	private String folderName;
