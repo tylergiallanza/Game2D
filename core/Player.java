@@ -126,8 +126,10 @@ public class Player extends GameObject implements Gravity {
 				||Block.getBlock(x,y-30)!=null||Block.getBlock(x-30,y)!=null) {
 			if (x>Driver.WIDTH/2-REACH&&x<Driver.WIDTH/2+REACH+width) {
 				if (y>Driver.HEIGHT/2-REACH&&y<Driver.HEIGHT/2+REACH+height) {
-					if (Driver.getWorld().getLoaded()[(int) ((x-Driver.getX())/30)][(int) ((y-Driver
-							.getY())/30)]==null) {
+					if (!Driver.getWorld().isAnyOnMap((int) ((x-Driver.getX())),(int) ((y-Driver
+							.getY())))) {
+					//if (Driver.getWorld().getLoaded()[(int) ((x-Driver.getX())/30)][(int) ((y-Driver
+					//		.getY())/30)]==null) {
 						Driver.getWorld().getLoaded()[(int) ((x-Driver.getX())/30)][(int) ((y-Driver
 								.getY())/30)] = new Block(x-Driver.getX()
 								-(x-Driver.getX())%30,y-Driver.getY()
@@ -165,51 +167,51 @@ public class Player extends GameObject implements Gravity {
 	}
 
 	private boolean canMoveRight() {
-		return !(Driver.getWorld().isOnMap(this.getX()+this.getWidth()+1,
+		return !(Driver.getWorld().isAnyOnMap(this.getX()+this.getWidth()+1,
 				this.getY())
-				||Driver.getWorld().isOnMap(this.getX()+this.getWidth()+2,
+				||Driver.getWorld().isAnyOnMap(this.getX()+this.getWidth()+2,
 						this.getY()+this.getHeight()/2)||Driver.getWorld()
-				.isOnMap(this.getX()+this.getWidth()+2,
+				.isAnyOnMap(this.getX()+this.getWidth()+2,
 						this.getY()+this.getHeight()-10));
 	}
 
 	private boolean canMoveLeft() {
-		return !(Driver.getWorld().isOnMap(this.getX()-1,this.getY())
-				||Driver.getWorld().isOnMap(this.getX()-1,
+		return !(Driver.getWorld().isAnyOnMap(this.getX()-1,this.getY())
+				||Driver.getWorld().isAnyOnMap(this.getX()-1,
 						this.getY()+this.getHeight()/2)||Driver.getWorld()
-				.isOnMap(this.getX()-1,this.getY()+this.getHeight()-10));
+				.isAnyOnMap(this.getX()-1,this.getY()+this.getHeight()-10));
 	}
 
 	private boolean canMoveUp(int vel) {
-		return !(Driver.getWorld().isOnMap(this.getX()+1,
+		return !(Driver.getWorld().isAnyOnMap(this.getX()+1,
 				this.getY()+this.height+vel)
-				||Driver.getWorld().isOnMap(this.getX()+this.getWidth()-1,
+				||Driver.getWorld().isAnyOnMap(this.getX()+this.getWidth()-1,
 						this.getY()+this.height+vel)||Driver.getWorld()
-				.isOnMap(this.getX()+width/2,this.getY()+this.height+vel));
+				.isAnyOnMap(this.getX()+width/2,this.getY()+this.height+vel));
 	}
 
 	private boolean isInGround() {
-		return (Driver.getWorld().isOnMap(xPos,yPos)
-				||Driver.getWorld().isOnMap(xPos+width/2,yPos)||Driver
-				.getWorld().isOnMap(xPos+width-1,yPos))
-				||(Driver.getWorld().isOnMap(xPos,yPos+height/2)
-						||Driver.getWorld().isOnMap(xPos+width/2,yPos+height/2)||Driver
-						.getWorld().isOnMap(xPos+width-1,yPos+height/2))
-				||(Driver.getWorld().isOnMap(xPos,yPos+height)
-						||Driver.getWorld().isOnMap(xPos+width/2,yPos+height)||Driver
-						.getWorld().isOnMap(xPos+width-1,yPos+height));
+		return (Driver.getWorld().isAnyOnMap(xPos,yPos)
+				||Driver.getWorld().isAnyOnMap(xPos+width/2,yPos)||Driver
+				.getWorld().isAnyOnMap(xPos+width-1,yPos))
+				||(Driver.getWorld().isAnyOnMap(xPos,yPos+height/2)
+						||Driver.getWorld().isAnyOnMap(xPos+width/2,yPos+height/2)||Driver
+						.getWorld().isAnyOnMap(xPos+width-1,yPos+height/2))
+				||(Driver.getWorld().isAnyOnMap(xPos,yPos+height)
+						||Driver.getWorld().isAnyOnMap(xPos+width/2,yPos+height)||Driver
+						.getWorld().isAnyOnMap(xPos+width-1,yPos+height));
 	}
 
 	private boolean areFeetInGround() {
-		return (Driver.getWorld().isOnMap(xPos,yPos)
-				||Driver.getWorld().isOnMap(xPos+width/2,yPos)||Driver
-				.getWorld().isOnMap(xPos+width-1,yPos));
+		return (Driver.getWorld().isAnyOnMap(xPos,yPos)
+				||Driver.getWorld().isAnyOnMap(xPos+width/2,yPos)||Driver
+				.getWorld().isAnyOnMap(xPos+width-1,yPos));
 	}
 
 	private boolean isHeadInGround() {
-		return (Driver.getWorld().isOnMap(xPos,yPos+height)
-				||Driver.getWorld().isOnMap(xPos+width/2,yPos+height)||Driver
-				.getWorld().isOnMap(xPos+width-1,yPos+height));
+		return (Driver.getWorld().isAnyOnMap(xPos,yPos+height)
+				||Driver.getWorld().isAnyOnMap(xPos+width/2,yPos+height)||Driver
+				.getWorld().isAnyOnMap(xPos+width-1,yPos+height));
 	}
 
 	public static File toFile(Player input, String fileName) {

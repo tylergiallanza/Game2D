@@ -1,5 +1,7 @@
 package npc;
 
+import java.util.ArrayList;
+
 import physics.*;
 import core.*;
 import main.Driver;
@@ -8,12 +10,14 @@ public class Character extends GameObject implements Gravity {
 
 	public static final double GRAVITY = .4;
 	public static double yVel;
+	public static ArrayList<Character> NPCs = new ArrayList<Character>();
 
 	public Character(int x, int y, String type, String name) {
 		super(x,y,type,name);
 		width = 36;
 		height = 72;
 		yVel = 0;
+		NPCs.add(this);
 	}
 
 	public void update() {

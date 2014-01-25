@@ -30,6 +30,7 @@ public class Driver {
 	 *       - Add Don Quixote mode
 	 *       - Add multiplayer
 	 *       - Expand ore generation
+	 *       - Save/Load NPCs
 	 */
 
 	/**
@@ -38,12 +39,13 @@ public class Driver {
 	 *           - Fix treegen over caves
 	 *           - Spawning should be on surface
 	 *     		 - The lag is back- and this time on Windows...
+	 *     		 - Fix teleportation error when player moves left into an NPC
 	 */
 
 	private static double x;
 	private static double y;
 	private static Player player;
-	private static Character character;
+	private static Friendly friendly;
 	public static String gameState = "start";
 	public static final int WORLDWIDTH = 3;
 	public static int WIDTH = 1200;
@@ -122,8 +124,7 @@ public class Driver {
 				case "new":
 					System.out.println("new");
 					player = new Player(WIDTH/2,HEIGHT/2,"PNG","person3.png");
-					character = new Character(WIDTH/3,HEIGHT+500,"PNG",
-							"person1.png");
+					friendly = new Friendly(WIDTH/3,HEIGHT+500);
 					map = new World("NewMap"+getMaps().length);
 					gameState = "inGame";
 					break;
@@ -150,8 +151,8 @@ public class Driver {
 			drawWorld(map);
 			drawInventory(player.getInventory());
 			player.update();
-			character.update();
-			drawCharacter(character);
+			friendly.update();
+			drawCharacter(friendly);
 			drawPlayer(player);
 			
 			updateActiveBlocks();

@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 
 import main.Driver;
+import npc.Character;
 
 public class World {
 
@@ -144,6 +145,17 @@ public class World {
 		return false;
 	}
 
+	public boolean isAnyOnMap(int x, int y){
+		try{
+			Block[][] b = getLoaded();
+			if(b[(int)((x)/30)][(int)((y)/30)] != null) return true;
+			for(Character c : Character.NPCs) {
+				if(x > c.getX() && x < c.getX()+c.getWidth() && y > c.getY() && y < c.getY()+c.getHeight()) return true;
+			}
+		} catch(Exception e) {return false;}
+		return false;
+	}
+	
 	public boolean isOnMap(GameObject obj){
 		try{ 
 
