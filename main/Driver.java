@@ -21,7 +21,6 @@ public class Driver {
 	 * @TODO
 	 *       - Add swag
 	 *       - Water?
-	 *       - Add new blocks
 	 *       - Add world-specific player files
 	 *       - Add new tools (weapon?)
 	 *       - Add enemies  
@@ -29,6 +28,7 @@ public class Driver {
 	 *       - Fix lag
 	 *       - Add Don Quixote mode 
 	 *       - Add multiplayer
+	 *       - Expand ore generation
 	 */
 
 	/**

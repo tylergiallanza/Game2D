@@ -10,10 +10,14 @@ import main.Driver;
 public class World {
 
 	public static final int WIDTH = 50;
-	public static final int HEIGHT = 30;
+	public static final int HEIGHT = 50;
 	private Block[][] data;
 	private ArrayList<Tile> tiles = new ArrayList<Tile>();
 	private String folderName;
+	public static final double IRON_GENERATION_COEFFICIENT = .018; //higher means more iron veins
+	public static final double IRON_SPREAD_COEFFICIENT = 7.5; //higher means less spreading
+	public static final int IRON_MAX_HEIGHT = (int)(HEIGHT * .5); //the max height at which iron will spawn
+	public static final int CAVES_QUOTIENT = 30; //higher means less caves
 
 	public World(String name) {
 		folderName = name;
@@ -114,9 +118,10 @@ public class World {
 				treeLeft = false;
 			}
 		}
-		int numCaves = (int)(Math.random() * WIDTH / 25);
+		int numCaves = (int)(Math.random() * WIDTH / CAVES_QUOTIENT);
 		for(int q = 0; q <= numCaves; q++)
 			chunk = this.createCave(chunk, (int)(Math.random() * WIDTH));
+		chunk = this.addOres(chunk);
 		data = chunk;
 	}
 
@@ -179,6 +184,40 @@ public class World {
 			if(Math.random() < .2) direction = !direction;
 		}
 		return map;
+	}
+	
+	private Block[][] addOres (Block[][] input){
+		double height = 0;
+		for(Block[] B : input){
+			height = 0;
+			for(Block b : B){
+				height++;
+				if(height > IRON_MAX_HEIGHT) continue;
+				if(b == null) continue;
+				if(Math.random() < IRON_GENERATION_COEFFICIENT * ((HEIGHT-height)/(double)HEIGHT)){
+					System.out.println("a");
+					int numBlocks = (int)(IRON_SPREAD_COEFFICIENT * Math.random());
+					for(int i = 0; i < numBlocks; i++){
+						if(b == null) continue;
+						System.out.println(b.getX()/Block.WIDTH + "," + b.getY()/Block.HEIGHT);
+						if(b.getType().equals("stone"))
+							b.changeTo("iron");
+						b = getRandomAdjacentBlock(b, input);
+					}
+				}
+			}
+		}
+		return input;
+	}
+	
+	private Block getRandomAdjacentBlock(Block input, Block[][] chunk){
+		double randomVal = Math.random();
+		if(input.getX() <= 0 || input.getX() >= (WIDTH -1) * Block.WIDTH) return null;
+		if(input.getY() <= 0 || input.getY() >= (HEIGHT-1) * Block.HEIGHT) return null;
+		if(randomVal < .25) return chunk[input.getX()/Block.WIDTH][input.getY()/Block.HEIGHT + 1];
+		if(randomVal < .50) return chunk[input.getX()/Block.WIDTH][input.getY()/Block.HEIGHT - 1];
+		if(randomVal < .75) return chunk[input.getX()/Block.WIDTH + 1][input.getY()/Block.HEIGHT];
+		return chunk[input.getX()/Block.WIDTH - 1][input.getY()/Block.HEIGHT];
 	}
 
 

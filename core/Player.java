@@ -16,8 +16,8 @@ public class Player extends GameObject implements Gravity {
 	private static final int REACH = 70;
 	private double yVel = 0;
 	private static final int XVELOCITY = 3;
-	private final double GRAVITY = .4;
-	private final double JUMPVELOCITY = 8;
+	private static final double GRAVITY = .4;
+	private static final double JUMPVELOCITY = 8;
 	private boolean canJump = false;
 	private boolean direction;
 	private Inventory inventory;

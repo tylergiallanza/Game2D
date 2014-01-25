@@ -20,9 +20,11 @@ public class Block extends GameObject {
 	private static Texture grass;
 	private static Texture crate;
 	private static Texture tnt;
+	private static Texture iron;
 	public static final int WOODBREAKTIME = 200;
 	public static final int STONEBREAKTIME = 100;
 	public static final int GRASSBREAKTIME = 40;
+	public static final int IRONBREAKTIME = 130;
 
 	public static void init(){
 		try{
@@ -32,6 +34,7 @@ public class Block extends GameObject {
 			grass = loadTexture("PNG", "grass.png");
 			crate = loadTexture("PNG", "crate.png");
 			tnt = loadTexture("PNG", "tnt.png");
+			iron = loadTexture("PNG", "iron.png");
 		}catch(Exception e){System.out.println("Failed to init block textures");}
 	}
 
@@ -117,12 +120,13 @@ public class Block extends GameObject {
 		if(type.equals("grass")) return grass;
 		if(type.equals("crate")) return crate;
 		if(type.equals("tnt")) return tnt;
+		if(type.equals("iron")) return iron;
 		return null;
 	}
 	
 	private static String linkTool(String type){
 		if(type.equals("wood")) return "axe";
-		if(type.equals("stone") || type.equals("grass")) return "pick";
+		if(type.equals("stone") || type.equals("grass") || type.equals("iron")) return "pick";
 		return "any";
 	}
 	
@@ -130,6 +134,7 @@ public class Block extends GameObject {
 		if(type.equals("wood")) return WOODBREAKTIME;
 		if(type.equals("stone")) return STONEBREAKTIME;
 		if(type.equals("grass")) return GRASSBREAKTIME;
+		if(type.equals("iron")) return IRONBREAKTIME;
 		return 1;
 	}
 
@@ -145,7 +150,14 @@ public class Block extends GameObject {
 		else if(breakTime<finalTime*0.6) texture = loadTexture("PNG",getType()+"3.png");
 		else if(breakTime<finalTime*0.8) texture = loadTexture("PNG",getType()+"2.png");
 		else if(breakTime<finalTime)loadTexture("PNG",getType()+"1.png");
-		
 	}
+	
+	public void changeTo(String newType){
+		type = newType;
+		breakType = linkTool(newType);
+		breakTime = linkTime(newType);
+		texture = linkTexture(newType);
+	}
+	
 
 }
