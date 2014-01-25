@@ -5,12 +5,13 @@ import main.Driver;
 
 public class Friendly extends Character {
 
-	public Friendly() {
-		// TODO Auto-generated constructor stub
+	public Friendly(int x, int y, String type, String name) {
+		super(x, y, type, name);
 	}
 	
-	public void updateGravity(){
-		
+	public Friendly(int x, int y) {
+		super(x, y, "PNG", "friendly.png");
 	}
+	
 
 }

@@ -3,14 +3,10 @@ import physics.*;
 import core.*;
 import main.Driver;
 
-public class Enemy extends Character implements Gravity {
+public class Enemy extends Character {
 	
-	public Enemy() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public void updateGravity(){
-		
+	public Enemy(int x, int y, String type, String name) {
+		super(x, y, type, name);
 	}
 
 }

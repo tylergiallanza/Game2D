@@ -151,8 +151,9 @@ public class Driver {
 			drawInventory(player.getInventory());
 			player.update();
 			character.update();
-			drawPlayer(player);
 			drawCharacter(character);
+			drawPlayer(player);
+			
 			updateActiveBlocks();
 		}
 		Display.sync(60);
