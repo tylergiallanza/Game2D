@@ -75,6 +75,11 @@ public class Player extends GameObject implements Gravity {
 	}
 
 	private void breakAtMouse(int x, int y) {
+		if(!direction){
+			if(x > xPos + width + Driver.getX())
+				return;
+		} else if(x < xPos + Driver.getX())
+				return;
 		if (Block.getBlock(x,y)==null)
 			return;
 		if (!canBreak(Block.getBlock(x,y)))
