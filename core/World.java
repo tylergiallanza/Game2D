@@ -207,11 +207,9 @@ public class World {
 				if(height > IRON_MAX_HEIGHT) continue;
 				if(b == null) continue;
 				if(Math.random() < IRON_GENERATION_COEFFICIENT * ((HEIGHT-height)/(double)HEIGHT)){
-					System.out.println("a");
 					int numBlocks = (int)(IRON_SPREAD_COEFFICIENT * Math.random());
 					for(int i = 0; i < numBlocks; i++){
 						if(b == null) continue;
-						System.out.println(b.getX()/Block.WIDTH + "," + b.getY()/Block.HEIGHT);
 						if(b.getType().equals("stone"))
 							b.changeTo("iron");
 						b = getRandomAdjacentBlock(b, input);

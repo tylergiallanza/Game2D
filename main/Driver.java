@@ -147,21 +147,33 @@ public class Driver {
 		} else {
 
 			GL11.glTranslated(x,y,0);
-
-			drawWorld(map);
-			drawInventory(player.getInventory());
-			player.update();
-			friendly.update();
-			drawCharacter(friendly);
-			drawPlayer(player);
-			
-			updateActiveBlocks();
+			doGameLoop();
 		}
 		Display.sync(60);
 		Display.update();
 		GL11.glPopMatrix();
+		GL11.glFinish();
 	}
 
+	private static void doGameLoop(){
+		doLogic();
+		doRender();
+	}
+	
+	private static void doLogic(){
+		updateActiveBlocks();
+		player.update();
+		friendly.update();
+	}
+	
+	private static void doRender(){
+		drawInventory(player.getInventory());
+		drawWorld(map);
+		drawCharacter(friendly);
+		drawPlayer(player);
+		player.updateWindow();
+	}
+	
 	private static void end() {
 		Display.destroy();
 		System.exit(0);
@@ -213,6 +225,7 @@ public class Driver {
 		} catch (Exception e) {
 			return false;
 		}
+		
 	}
 
 	private static boolean draw(Tool obj, boolean right) {

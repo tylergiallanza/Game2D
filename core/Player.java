@@ -22,6 +22,7 @@ public class Player extends GameObject implements Gravity {
 	private boolean direction;
 	private Inventory inventory;
 	private int inventorySlot = 0;
+	private int moved = 0;
 
 	public Player(int x, int y, String type, String name) {
 		inventory = new Inventory();
@@ -45,6 +46,7 @@ public class Player extends GameObject implements Gravity {
 	}
 
 	public void update() {
+		moved = 0;
 		checkTiles();
 		if (Mouse.isButtonDown(0)) {
 			breakAtMouse(Mouse.getX(),Mouse.getY());
@@ -71,7 +73,6 @@ public class Player extends GameObject implements Gravity {
 				yPos++;
 			}
 		}
-		updateWindow();
 	}
 
 	private void breakAtMouse(int x, int y) {
@@ -156,13 +157,13 @@ public class Player extends GameObject implements Gravity {
 	private void checkMotion() {
 		if (Keyboard.isKeyDown(Keyboard.KEY_D)&&canMoveRight()) {
 			direction = true;
+			moved = 1;
 			this.setX(this.getX()+XVELOCITY);
-			Driver.changeX(-XVELOCITY);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_A)&&canMoveLeft()) {
 			direction = false;
 			this.setX(this.getX()-XVELOCITY);
-			Driver.changeX(XVELOCITY);
+			moved = -1;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)&&canJump) {
 			canJump = false;
@@ -299,7 +300,11 @@ public class Player extends GameObject implements Gravity {
 		return false;
 	}*/
 
-	private void updateWindow() {
+	public void updateWindow() {
+		if(moved == 1)
+			Driver.changeX(-XVELOCITY);
+		if(moved == -1)
+			Driver.changeX(XVELOCITY);
 		Driver.setY(Driver.getY()-(Driver.getY()+(yPos-Driver.HEIGHT/2)));
 	}
 
