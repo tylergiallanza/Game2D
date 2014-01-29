@@ -167,8 +167,8 @@ public class Driver {
 	}
 	
 	private static void doRender(){
-		drawInventory(player.getInventory());
 		drawWorld(map);
+		drawInventory(player.getInventory());
 		drawCharacter(friendly);
 		drawPlayer(player);
 		player.updateWindow();
