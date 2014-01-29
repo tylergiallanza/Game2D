@@ -149,9 +149,9 @@ public class World {
 		try{
 			Block[][] b = getLoaded();
 			if(b[(int)((x)/30)][(int)((y)/30)] != null) return true;
-			for(Character c : Character.NPCs) {
+			/*for(Character c : Character.NPCs) {
 				if(x > c.getX() && x < c.getX()+c.getWidth() && y > c.getY() && y < c.getY()+c.getHeight()) return true;
-			}
+			}*/
 		} catch(Exception e) {return false;}
 		return false;
 	}
