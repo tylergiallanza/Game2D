@@ -10,8 +10,8 @@ import npc.Character;
 
 public class World {
 
-	public static final int WIDTH = 50;
-	public static final int HEIGHT = 50;
+	public static final int WIDTH = 80;
+	public static final int HEIGHT = 80;
 	private Block[][] data;
 	private ArrayList<Tile> tiles = new ArrayList<Tile>();
 	private String folderName;

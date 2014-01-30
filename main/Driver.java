@@ -45,15 +45,16 @@ public class Driver {
 	 *       - Add tiers of tools
 	 *       - Water
 	 *       - Crafting
+	 *   	 - Window resizing
 	 */
 
 	/**
 	 * @BUGFIXES
+	 * 			 - Fix NullPointer upon incomplete load
+	 * 			 - Add failsafe for centering player on screen
 	 *           - Fix GUI image stretch error
 	 *           - Fix treegen over caves
 	 *           - Spawning should be on surface
-	 *     		 - The lag is back- and this time on Windows...
-	 *     		 - Fix teleportation error when player moves left into an NPC
 	 */
 
 	private static double x;
@@ -371,7 +372,7 @@ public class Driver {
 	}
 
 	public static void drawInventory(Inventory inv) {
-		/*int spot = (WIDTH/2)-((INVENTORY_ICON_WIDTH+5)*5);
+	/*	int spot = (WIDTH/2)-((INVENTORY_ICON_WIDTH+5)*5);
 		for (int i = 0; i<10; i++) {
 			if(inv.getData()[i].getType().equals("empty")) continue; 
 			Item item = inv.getData()[i];
