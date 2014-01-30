@@ -7,6 +7,7 @@ import org.lwjgl.input.*;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.opengl.Texture;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,17 +21,27 @@ public class Driver {
 
 	/**
 	 * @TODO
+	 * 
+	 * 		 FUN:
 	 *       - Add swag
-	 *       - Water?
-	 *       - Add world-specific player files
 	 *       - Add new tools (weapon?)
 	 *       - Add enemies
-	 *       - Update swing animation
-	 *       - Fix lag
 	 *       - Add Don Quixote mode
+	 *       	- Windmill
+	 *       	- Enemies
+	 *       	- Friendlies
+	 *       	- Horse
 	 *       - Add multiplayer
 	 *       - Expand ore generation
+	 *       - Expand AI
+	 *       - Water
+	 *       - Crafting
+	 *       REQUIRED:
+	 *       - Add world-specific player files
 	 *       - Save/Load NPCs
+	 *       - Re-write drawInventory
+	 *       - Settings window
+	 *       - Buttons/GUI aesthetic overhaul
 	 */
 
 	/**
@@ -55,6 +66,7 @@ public class Driver {
 	private static World map;
 	public static final boolean fullscreen = false;
 	private static ArrayList<Block> active = new ArrayList<Block>();
+	private static ArrayList<Texture> textures = new ArrayList<Texture>();
 	public static final int INVENTORY_ICON_WIDTH = 40;
 
 	public static void main(String[] args) throws IOException {
@@ -159,13 +171,13 @@ public class Driver {
 		doLogic();
 		doRender();
 	}
-	
+
 	private static void doLogic(){
 		updateActiveBlocks();
 		player.update();
 		friendly.update();
 	}
-	
+
 	private static void doRender(){
 		drawWorld(map);
 		drawInventory(player.getInventory());
@@ -173,7 +185,7 @@ public class Driver {
 		drawPlayer(player);
 		player.updateWindow();
 	}
-	
+
 	private static void end() {
 		Display.destroy();
 		System.exit(0);
@@ -218,14 +230,14 @@ public class Driver {
 						obj.getWidth(),
 						obj.getHeight(),
 						(double) ((Block) obj).breakTime
-								/(Block.linkTime(((Block) obj).getType())));
+						/(Block.linkTime(((Block) obj).getType())));
 			else
 				rect(obj.getX(),obj.getY(),obj.getWidth(),obj.getHeight(),1);
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
-		
+
 	}
 
 	private static boolean draw(Tool obj, boolean right) {
@@ -356,17 +368,15 @@ public class Driver {
 	}
 
 	public static void drawInventory(Inventory inv) {
-		int spot = (WIDTH/2)-((INVENTORY_ICON_WIDTH+5)*5);
+		/*int spot = (WIDTH/2)-((INVENTORY_ICON_WIDTH+5)*5);
 		for (int i = 0; i<10; i++) {
-			try {
-				Item item = inv.getData()[i];
-				new Tile(item,0,0).getTexture().bind();
-				rect(spot-(int) x,HEIGHT-INVENTORY_ICON_WIDTH-10-(int) y,
-						INVENTORY_ICON_WIDTH,INVENTORY_ICON_WIDTH,1);
-			} catch (Exception e) {
-			}
+			if(inv.getData()[i].getType().equals("empty")) continue; 
+			Item item = inv.getData()[i];
+			new Tile(item,0,0).getTexture().bind();
+			rect(spot-(int) x,HEIGHT-INVENTORY_ICON_WIDTH-10-(int) y,
+					INVENTORY_ICON_WIDTH,INVENTORY_ICON_WIDTH,1);
 			spot += INVENTORY_ICON_WIDTH+5;
-		}
+		}*/
 	}
 
 	public static String[] getMaps() {

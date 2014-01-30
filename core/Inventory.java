@@ -51,5 +51,13 @@ public class Inventory {
 		}
 		return false;
 	}
+	
+	public int getNumThingsInBar(){
+		int numThings = 0;
+		for(Item i : data)
+			if(i != null)
+				numThings++;
+		return numThings;
+	}
 
 }
