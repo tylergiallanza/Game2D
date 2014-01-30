@@ -42,6 +42,7 @@ public class Inventory {
 	public void loadDefault(){
 		data[0] = new Tool();
 		data[1] = new Tool("pick");
+		data[2] = new Tool("sword");
 	}
 
 	private boolean isTypeInInventory(String type){

@@ -20,6 +20,7 @@ public class Player extends GameObject implements Gravity {
 	private static final double JUMPVELOCITY = 8;
 	private boolean canJump = false;
 	private boolean direction;
+	private boolean isSwinging = false;
 	private Inventory inventory;
 	private int inventorySlot = 0;
 	private int moved = 0;
@@ -48,11 +49,15 @@ public class Player extends GameObject implements Gravity {
 	public void update() {
 		moved = 0;
 		checkTiles();
+		if(isSwinging && getSelectedSlot().getType().equals("sword"))
+			if(doSword())
+				isSwinging = false;
 		if (Mouse.isButtonDown(0)) {
-			breakAtMouse(Mouse.getX(),Mouse.getY());
-		} else if (getSelectedSlot() instanceof Tool
-				&&((Tool) getSelectedSlot()).getRotation()!=Tool
-						.linkMaxRotation(((Tool) getSelectedSlot()).getType()))
+			if(getSelectedSlot().getType().equals("sword"))
+				isSwinging = true;
+			else
+				breakAtMouse(Mouse.getX(),Mouse.getY());
+		} else if (getSelectedSlot() instanceof Tool &&((Tool) getSelectedSlot()).getRotation()!=Tool.linkMaxRotation(((Tool) getSelectedSlot()).getType()) && !getSelectedSlot().getType().equals("sword"))
 			((Tool) getSelectedSlot()).resetRotation();
 		if (Mouse.isButtonDown(1)) {
 			if (placeAtMouse(Mouse.getX(),Mouse.getY()))
@@ -80,11 +85,11 @@ public class Player extends GameObject implements Gravity {
 			if(x > xPos + width + Driver.getX())
 				return;
 		} else if(x < xPos + Driver.getX())
-				return;
+			return;
 		if (Block.getBlock(x,y)==null)
-			return;
+				return;
 		if (!canBreak(Block.getBlock(x,y)))
-			return;
+				return;
 		if (x>Driver.WIDTH/2-REACH&&x<Driver.WIDTH/2+REACH+width) {
 			if (y>Driver.HEIGHT/2-REACH&&y<Driver.HEIGHT/2+REACH+height) {
 				if (getBlockAtMouse().breakTime==Block
@@ -113,7 +118,7 @@ public class Player extends GameObject implements Gravity {
 				Driver.getWorld().getLoaded()[(int) ((x-Driver.getX())/30)][(int) ((y-Driver
 						.getY())/30)] = null;
 				Driver.getWorld().getTileInfo()
-						.add(new Tile(x-Driver.getX(),y-Driver.getY(),t));
+				.add(new Tile(x-Driver.getX(),y-Driver.getY(),t));
 			}
 			if (t.equals("wood")
 					&&Block.getBlock(x,y+Block.HEIGHT).getType().equals("wood"))
@@ -134,13 +139,13 @@ public class Player extends GameObject implements Gravity {
 				if (y>Driver.HEIGHT/2-REACH&&y<Driver.HEIGHT/2+REACH+height) {
 					if (!Driver.getWorld().isAnyOnMap((int) ((x-Driver.getX())),(int) ((y-Driver
 							.getY())))) {
-					//if (Driver.getWorld().getLoaded()[(int) ((x-Driver.getX())/30)][(int) ((y-Driver
-					//		.getY())/30)]==null) {
+						//if (Driver.getWorld().getLoaded()[(int) ((x-Driver.getX())/30)][(int) ((y-Driver
+						//		.getY())/30)]==null) {
 						Driver.getWorld().getLoaded()[(int) ((x-Driver.getX())/30)][(int) ((y-Driver
 								.getY())/30)] = new Block(x-Driver.getX()
-								-(x-Driver.getX())%30,y-Driver.getY()
-								-(y-Driver.getY())%30,getSelectedSlot()
-								.getType());
+										-(x-Driver.getX())%30,y-Driver.getY()
+										-(y-Driver.getY())%30,getSelectedSlot()
+										.getType());
 						if (Driver.getPlayer().isInGround()) {
 							Driver.getWorld().getLoaded()[(int) ((x-Driver
 									.getX())/30)][(int) ((y-Driver.getY())/30)] = null;
@@ -173,19 +178,20 @@ public class Player extends GameObject implements Gravity {
 	}
 
 	private boolean canMoveRight() {
-		return !(Driver.getWorld().isAnyOnMap(this.getX()+this.getWidth()+1,
-				this.getY())
+		return !(Driver.getWorld().isAnyOnMap(this.getX()+this.getWidth()+1,this.getY())
+				||Driver.getWorld().isAnyOnMap(this.getX()+this.getWidth()+2,this.getY()+this.getHeight()/4)
+				|Driver.getWorld().isAnyOnMap(this.getX()+this.getWidth()+2,this.getY()+this.getHeight()/2)
+				||Driver.getWorld().isAnyOnMap(this.getX()+this.getWidth()+2,this.getY()+3*this.getHeight()/4)
 				||Driver.getWorld().isAnyOnMap(this.getX()+this.getWidth()+2,
-						this.getY()+this.getHeight()/2)||Driver.getWorld()
-				.isAnyOnMap(this.getX()+this.getWidth()+2,
-						this.getY()+this.getHeight()-10));
+								this.getY()+this.getHeight()-10));
 	}
 
 	private boolean canMoveLeft() {
 		return !(Driver.getWorld().isAnyOnMap(this.getX()-1,this.getY())
-				||Driver.getWorld().isAnyOnMap(this.getX()-1,
-						this.getY()+this.getHeight()/2)||Driver.getWorld()
-				.isAnyOnMap(this.getX()-1,this.getY()+this.getHeight()-10));
+				||Driver.getWorld().isAnyOnMap(this.getX()-1,this.getY()+this.getHeight()/4)
+				||Driver.getWorld().isAnyOnMap(this.getX()-1,this.getY()+this.getHeight()/2)
+				||Driver.getWorld().isAnyOnMap(this.getX()-1,this.getY()+3*this.getHeight()/4)
+				||Driver.getWorld().isAnyOnMap(this.getX()-1,this.getY()+this.getHeight()-10));
 	}
 
 	private boolean canMoveUp(int vel) {
@@ -193,7 +199,7 @@ public class Player extends GameObject implements Gravity {
 				this.getY()+this.height+vel)
 				||Driver.getWorld().isAnyOnMap(this.getX()+this.getWidth()-1,
 						this.getY()+this.height+vel)||Driver.getWorld()
-				.isAnyOnMap(this.getX()+width/2,this.getY()+this.height+vel));
+						.isAnyOnMap(this.getX()+width/2,this.getY()+this.height+vel));
 	}
 
 	private boolean isInGround() {
@@ -203,9 +209,9 @@ public class Player extends GameObject implements Gravity {
 				||(Driver.getWorld().isAnyOnMap(xPos,yPos+height/2)
 						||Driver.getWorld().isAnyOnMap(xPos+width/2,yPos+height/2)||Driver
 						.getWorld().isAnyOnMap(xPos+width-1,yPos+height/2))
-				||(Driver.getWorld().isAnyOnMap(xPos,yPos+height)
-						||Driver.getWorld().isAnyOnMap(xPos+width/2,yPos+height)||Driver
-						.getWorld().isAnyOnMap(xPos+width-1,yPos+height));
+						||(Driver.getWorld().isAnyOnMap(xPos,yPos+height)
+								||Driver.getWorld().isAnyOnMap(xPos+width/2,yPos+height)||Driver
+								.getWorld().isAnyOnMap(xPos+width-1,yPos+height));
 	}
 
 	private boolean areFeetInGround() {
@@ -347,6 +353,11 @@ public class Player extends GameObject implements Gravity {
 
 	public Inventory getInventory() {
 		return inventory;
+	}
+	
+	private boolean doSword(){
+		System.out.println(direction);
+		return ((Tool)(getSelectedSlot())).rotate(direction);
 	}
 
 }

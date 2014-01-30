@@ -18,6 +18,9 @@ public class World {
 	public static final double IRON_GENERATION_COEFFICIENT = .018; //higher means more iron veins
 	public static final double IRON_SPREAD_COEFFICIENT = 7.5; //higher means less spreading
 	public static final int IRON_MAX_HEIGHT = (int)(HEIGHT * .5); //the max height at which iron will spawn
+	public static final double COAL_GENERATION_COEFFICIENT = .012; //higher means more iron veins
+	public static final double COAL_SPREAD_COEFFICIENT = 11.5; //higher means less spreading
+	public static final int COAL_MAX_HEIGHT = (int)(HEIGHT * .5); //the max height at which iron will spawn
 	public static final int CAVES_QUOTIENT = 30; //higher means less caves
 
 	public World(String name) {
@@ -211,6 +214,12 @@ public class World {
 	}
 	
 	private Block[][] addOres (Block[][] input){
+		input = doIronGen(input);
+		input = doCoalGen(input);
+		return input;
+	}
+	
+	private Block[][] doIronGen(Block[][] input){
 		double height = 0;
 		for(Block[] B : input){
 			height = 0;
@@ -224,6 +233,28 @@ public class World {
 						if(b == null) continue;
 						if(b.getType().equals("stone"))
 							b.changeTo("iron");
+						b = getRandomAdjacentBlock(b, input);
+					}
+				}
+			}
+		}
+		return input;
+	}
+	
+	private Block[][] doCoalGen(Block[][] input){
+		double height = 0;
+		for(Block[] B : input){
+			height = 0;
+			for(Block b : B){
+				height++;
+				if(height > COAL_MAX_HEIGHT) continue;
+				if(b == null) continue;
+				if(Math.random() < COAL_GENERATION_COEFFICIENT * ((HEIGHT-height)/(double)HEIGHT)){
+					int numBlocks = (int)(COAL_SPREAD_COEFFICIENT * Math.random());
+					for(int i = 0; i < numBlocks; i++){
+						if(b == null) continue;
+						if(b.getType().equals("stone"))
+							b.changeTo("coal");
 						b = getRandomAdjacentBlock(b, input);
 					}
 				}

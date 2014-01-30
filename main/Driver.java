@@ -24,7 +24,6 @@ public class Driver {
 	 * 
 	 * 		 FUN:
 	 *       - Add swag
-	 *       - Add new tools (weapon?)
 	 *       - Add enemies
 	 *       - Add Don Quixote mode
 	 *       	- Windmill
@@ -32,16 +31,20 @@ public class Driver {
 	 *       	- Friendlies
 	 *       	- Horse
 	 *       - Add multiplayer
-	 *       - Expand ore generation
-	 *       - Expand AI
-	 *       - Water
-	 *       - Crafting
+	 *       
 	 *       REQUIRED:
 	 *       - Add world-specific player files
 	 *       - Save/Load NPCs
 	 *       - Re-write drawInventory
 	 *       - Settings window
 	 *       - Buttons/GUI aesthetic overhaul
+	 *       
+	 *       INDIFFERENT:
+	 *       - Expand AI
+	 *       - Devmode
+	 *       - Add tiers of tools
+	 *       - Water
+	 *       - Crafting
 	 */
 
 	/**
@@ -66,7 +69,6 @@ public class Driver {
 	private static World map;
 	public static final boolean fullscreen = false;
 	private static ArrayList<Block> active = new ArrayList<Block>();
-	private static ArrayList<Texture> textures = new ArrayList<Texture>();
 	public static final int INVENTORY_ICON_WIDTH = 40;
 
 	public static void main(String[] args) throws IOException {
@@ -103,7 +105,7 @@ public class Driver {
 			e.printStackTrace();
 			System.exit(0);
 		}
-
+		
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -179,6 +181,7 @@ public class Driver {
 	}
 
 	private static void doRender(){
+		
 		drawWorld(map);
 		drawInventory(player.getInventory());
 		drawCharacter(friendly);
@@ -244,12 +247,12 @@ public class Driver {
 		try {
 			obj.getTexture().bind();
 			if (right)
-				tiltedrect(player.getX()+player.getWidth()-18+TOOLWIDTH,
-						player.getY()+player.getHeight()/4,-TOOLWIDTH,
-						TOOLHEIGHT,obj.getRotation());
+				tiltedrect(player.getX()+player.getWidth()-27+TOOLWIDTH,
+						player.getY()+player.getHeight()/3 + 3,-TOOLWIDTH,
+						TOOLHEIGHT,-obj.getRotation());
 			else
-				tiltedrect(player.getX()+18-player.getWidth(),player.getY()
-						+player.getHeight()/4,TOOLWIDTH,TOOLHEIGHT,
+				tiltedrect(player.getX()+27-player.getWidth(),player.getY()
+						+player.getHeight()/3 + 3,TOOLWIDTH,TOOLHEIGHT,
 						obj.getRotation());
 			return true;
 		} catch (Exception e) {

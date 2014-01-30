@@ -21,10 +21,12 @@ public class Block extends GameObject {
 	private static Texture crate;
 	private static Texture tnt;
 	private static Texture iron;
+	private static Texture coal;
 	public static final int WOODBREAKTIME = 200;
 	public static final int STONEBREAKTIME = 100;
 	public static final int GRASSBREAKTIME = 40;
 	public static final int IRONBREAKTIME = 130;
+	public static final int COALBREAKTIME = 120;
 
 	public static void init(){
 		try{
@@ -35,6 +37,7 @@ public class Block extends GameObject {
 			crate = loadTexture("PNG", "crate.png");
 			tnt = loadTexture("PNG", "tnt.png");
 			iron = loadTexture("PNG", "iron.png");
+			coal = loadTexture("PNG", "coal.png");
 		}catch(Exception e){System.out.println("Failed to init block textures");}
 	}
 
@@ -121,12 +124,13 @@ public class Block extends GameObject {
 		if(type.equals("crate")) return crate;
 		if(type.equals("tnt")) return tnt;
 		if(type.equals("iron")) return iron;
+		if(type.equals("coal")) return coal;
 		return null;
 	}
 	
 	private static String linkTool(String type){
 		if(type.equals("wood")) return "axe";
-		if(type.equals("stone") || type.equals("grass") || type.equals("iron")) return "pick";
+		if(type.equals("stone") || type.equals("grass") || type.equals("iron") || type.equals("coal")) return "pick";
 		return "any";
 	}
 	
@@ -135,23 +139,10 @@ public class Block extends GameObject {
 		if(type.equals("stone")) return STONEBREAKTIME;
 		if(type.equals("grass")) return GRASSBREAKTIME;
 		if(type.equals("iron")) return IRONBREAKTIME;
+		if(type.equals("coal")) return COALBREAKTIME;
 		return 1;
 	}
 
-	public boolean hasAnimation() {
-		if(type.equals("stone")) return true;
-		return false;
-	}
-
-	public void breakAnimation() {
-		int finalTime = linkTime(getType());
-		if(breakTime<finalTime*0.2) texture = loadTexture("PNG",getType()+"5.png");
-		else if(breakTime<finalTime*0.4) texture = loadTexture("PNG",getType()+"4.png");
-		else if(breakTime<finalTime*0.6) texture = loadTexture("PNG",getType()+"3.png");
-		else if(breakTime<finalTime*0.8) texture = loadTexture("PNG",getType()+"2.png");
-		else if(breakTime<finalTime)loadTexture("PNG",getType()+"1.png");
-	}
-	
 	public void changeTo(String newType){
 		type = newType;
 		breakType = linkTool(newType);

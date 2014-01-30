@@ -6,12 +6,16 @@ public class Tool extends Item{
 
 	private static Texture axe1;
 	private static Texture pick1;
+	private static Texture sword1;
 	private Texture texture;
 	private int rotation;
 	private int maxRotation;
-	public static final int DEFAULT_ROTATION = 0;
-	public static final int PICK_ROTATION = 45;
-	public static final int AXE_ROTATION = 45;
+	public static final int DEFAULT_ROTATION = 30;
+	public static final int PICK_ROTATION = 90;
+	public static final int AXE_ROTATION = 90;
+	public static final int SWORD_ROTATION = 90;
+	public static final int SWING_VELOCITY = 4;
+	public static final int SWORD_SWING_VELOCITY = 5;
 	
 	public Tool() {
 		type = "axe";
@@ -34,6 +38,7 @@ public class Tool extends Item{
 	public static void init(){
 		axe1 = GameObject.loadTexture("PNG", "axe1.png");
 		pick1 = GameObject.loadTexture("PNG", "pick1.png");
+		sword1 = GameObject.loadTexture("PNG", "sword1.png");
 	}
 	
 	public Texture getTexture(){
@@ -46,16 +51,21 @@ public class Tool extends Item{
 	
 	private static Texture linkTexture(String input){
 		if(input.equals("axe")) return axe1;
+		if(input.equals("sword")) return sword1;
 		return pick1;
 	}
 	
 	public static boolean isTool(String input){
-		return input.equals("pick") || input.equals("axe");
+		return input.equals("pick") || input.equals("axe") || input.equals("sword");
 	}
 	
-	public void rotate(boolean right){
-		rotation+= (right)? -3 : 3;
-		if(Math.abs(rotation) > maxRotation) rotation = DEFAULT_ROTATION;
+	public boolean rotate(boolean right){
+		rotation += (type.equals("sword"))? SWORD_SWING_VELOCITY : SWING_VELOCITY;
+		if(Math.abs(rotation) > maxRotation){
+			rotation = DEFAULT_ROTATION;
+			return true;
+		}
+		return false;
 	}
 	
 	public void resetRotation(){
@@ -64,6 +74,7 @@ public class Tool extends Item{
 	
 	public static int linkMaxRotation(String type){
 		if(type.equals("pick")) return PICK_ROTATION;
+		if(type.equals("sword")) return SWORD_ROTATION;
 		return AXE_ROTATION;
 	}
 
