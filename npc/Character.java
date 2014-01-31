@@ -12,6 +12,7 @@ public class Character extends GameObject implements Gravity, AI {
 	public static double yVel;
 	public static ArrayList<Character> NPCs = new ArrayList<Character>();
 	private static int act;
+	private static int health;
 
 	public Character(int x, int y, String type, String name) {
 		super(x,y,type,name);
@@ -20,6 +21,7 @@ public class Character extends GameObject implements Gravity, AI {
 		yVel = 0;
 		NPCs.add(this);
 		act = 0;
+		health = 100;
 	}
 
 	public void update() {
@@ -47,9 +49,9 @@ public class Character extends GameObject implements Gravity, AI {
 				||(Driver.getWorld().isOnMap(xPos,yPos+height/2)
 						||Driver.getWorld().isOnMap(xPos+width/2,yPos+height/2)||Driver
 						.getWorld().isOnMap(xPos+width-1,yPos+height/2))
-				||(Driver.getWorld().isOnMap(xPos,yPos+height)
-						||Driver.getWorld().isOnMap(xPos+width/2,yPos+height)||Driver
-						.getWorld().isOnMap(xPos+width-1,yPos+height));
+						||(Driver.getWorld().isOnMap(xPos,yPos+height)
+								||Driver.getWorld().isOnMap(xPos+width/2,yPos+height)||Driver
+								.getWorld().isOnMap(xPos+width-1,yPos+height));
 	}
 
 	private boolean areFeetInGround() {
@@ -70,8 +72,8 @@ public class Character extends GameObject implements Gravity, AI {
 				||Driver.getWorld().isAnyButMeOnMap(
 						this.getX()+this.getWidth()+2,
 						this.getY()+this.getHeight()/2,this)||Driver.getWorld()
-				.isAnyButMeOnMap(this.getX()+this.getWidth()+2,
-						this.getY()+this.getHeight()-10,this));
+						.isAnyButMeOnMap(this.getX()+this.getWidth()+2,
+								this.getY()+this.getHeight()-10,this));
 	}
 
 	protected boolean canMoveLeft() {
@@ -79,8 +81,8 @@ public class Character extends GameObject implements Gravity, AI {
 				this)
 				||Driver.getWorld().isAnyButMeOnMap(this.getX()-1,
 						this.getY()+this.getHeight()/2,this)||Driver.getWorld()
-				.isAnyButMeOnMap(this.getX()-1,this.getY()+this.getHeight()-10,
-						this));
+						.isAnyButMeOnMap(this.getX()-1,this.getY()+this.getHeight()-10,
+								this));
 	}
 
 	protected boolean moveLeft() {
@@ -100,7 +102,7 @@ public class Character extends GameObject implements Gravity, AI {
 			return false;
 		}
 	}
-	
+
 
 	public void updateGravity() {
 		if (yVel<=0) {
@@ -111,6 +113,26 @@ public class Character extends GameObject implements Gravity, AI {
 
 	public void defaultBehavior() {
 
+	}
+
+	public static ArrayList<Character> getCharsAtPoint(int x, int y){
+		ArrayList<Character> charsHit = new ArrayList<Character>();
+		for(Character c : charsHit)
+			if(c.isInCharacter(x, y))
+				charsHit.add(0, c);
+		return charsHit;
+	}
+
+	public void damage(int damage){
+		health -= damage;
+		System.out.println(damage);
+		if(health <= 0) NPCs.remove(this);
+	}
+
+	private boolean isInCharacter(int x, int y){
+		if(x < xPos || x > xPos + width) return false;
+		if(y < yPos || y > yPos + height) return false;
+		return true;
 	}
 
 }

@@ -14,6 +14,7 @@ public class World {
 	public static final int HEIGHT = 80;
 	private Block[][] data;
 	private ArrayList<Tile> tiles = new ArrayList<Tile>();
+	private static ArrayList<Character> allCharacters = new ArrayList<Character>();
 	private String folderName;
 	public static final double IRON_GENERATION_COEFFICIENT = .018; //higher means more iron veins
 	public static final double IRON_SPREAD_COEFFICIENT = 7.5; //higher means less spreading
@@ -272,6 +273,5 @@ public class World {
 		if(randomVal < .75) return chunk[input.getX()/Block.WIDTH + 1][input.getY()/Block.HEIGHT];
 		return chunk[input.getX()/Block.WIDTH - 1][input.getY()/Block.HEIGHT];
 	}
-
 
 }

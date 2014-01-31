@@ -25,6 +25,7 @@ public class Driver {
 	 * 		 FUN:
 	 *       - Add swag
 	 *       - Add enemies
+	 *       - Add sword damage
 	 *       - Add Don Quixote mode
 	 *       	- Windmill
 	 *       	- Enemies

@@ -11,6 +11,8 @@ import java.io.FileWriter;
 
 import java.util.Scanner;
 
+import npc.Character;
+
 public class Player extends GameObject implements Gravity {
 
 	private static final int REACH = 70;
@@ -356,7 +358,9 @@ public class Player extends GameObject implements Gravity {
 	}
 	
 	private boolean doSword(){
-		System.out.println(direction);
+		for(Character c : Character.getCharsAtPoint((direction)? xPos + width + 10 : xPos - 10, height/2 + Driver.getY())){
+			c.damage(((Tool)getSelectedSlot()).getDamage());
+		}
 		return ((Tool)(getSelectedSlot())).rotate(direction);
 	}
 

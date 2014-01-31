@@ -10,6 +10,7 @@ public class Tool extends Item{
 	private Texture texture;
 	private int rotation;
 	private int maxRotation;
+	private int damage;
 	public static final int DEFAULT_ROTATION = 30;
 	public static final int PICK_ROTATION = 90;
 	public static final int AXE_ROTATION = 90;
@@ -24,6 +25,7 @@ public class Tool extends Item{
 		rotation = DEFAULT_ROTATION;
 		maxRotation = linkMaxRotation(type);
 		count = 1;
+		damage = 0;
 	}
 	
 	public Tool(String type){
@@ -33,6 +35,7 @@ public class Tool extends Item{
 		rotation = DEFAULT_ROTATION;
 		count = 1;
 		maxRotation = linkMaxRotation(type);
+		damage = linkDamage(type);
 	}
 	
 	public static void init(){
@@ -76,6 +79,15 @@ public class Tool extends Item{
 		if(type.equals("pick")) return PICK_ROTATION;
 		if(type.equals("sword")) return SWORD_ROTATION;
 		return AXE_ROTATION;
+	}
+	
+	private static int linkDamage(String type){
+		if(type.equals("sword")) return 10;
+		return 0;
+	}
+	
+	public int getDamage(){
+		return damage;
 	}
 
 }
