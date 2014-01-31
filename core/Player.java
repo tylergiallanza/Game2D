@@ -358,7 +358,7 @@ public class Player extends GameObject implements Gravity {
 	}
 	
 	private boolean doSword(){
-		for(Character c : Character.getCharsAtPoint((direction)? xPos + width + 10 : xPos - 10, height/2 + Driver.getY())){
+		for(Character c : Character.getCharsAtPoint((direction)? xPos + width + 10 : xPos - 10, height/2 - Driver.getY() + Driver.HEIGHT/2)){
 			c.damage(((Tool)getSelectedSlot()).getDamage());
 		}
 		return ((Tool)(getSelectedSlot())).rotate(direction);

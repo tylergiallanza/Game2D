@@ -117,9 +117,12 @@ public class Character extends GameObject implements Gravity, AI {
 
 	public static ArrayList<Character> getCharsAtPoint(int x, int y){
 		ArrayList<Character> charsHit = new ArrayList<Character>();
-		for(Character c : charsHit)
+		for(Character c : NPCs){
+			System.out.println(x  + "," + y);
+			System.out.println(c.xPos + "," + c.yPos);
 			if(c.isInCharacter(x, y))
-				charsHit.add(0, c);
+				charsHit.add(c);
+		}
 		return charsHit;
 	}
 

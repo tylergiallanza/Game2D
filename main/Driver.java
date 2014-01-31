@@ -186,7 +186,7 @@ public class Driver {
 		
 		drawWorld(map);
 		drawInventory(player.getInventory());
-		drawCharacter(friendly);
+		drawCharacters(Character.NPCs);
 		drawPlayer(player);
 		player.updateWindow();
 	}
@@ -194,6 +194,17 @@ public class Driver {
 	private static void end() {
 		Display.destroy();
 		System.exit(0);
+	}
+	
+	private static boolean drawCharacters(ArrayList<Character> chars){
+		try{
+		for(Character c : chars)
+			drawCharacter(c);
+		} catch (Exception e){
+			System.out.println("failed to draw characters");
+			return false;
+		}
+		return true;
 	}
 
 	private static boolean drawCharacter(Character obj) {

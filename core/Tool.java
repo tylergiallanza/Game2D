@@ -14,7 +14,7 @@ public class Tool extends Item{
 	public static final int DEFAULT_ROTATION = 30;
 	public static final int PICK_ROTATION = 90;
 	public static final int AXE_ROTATION = 90;
-	public static final int SWORD_ROTATION = 90;
+	public static final int SWORD_ROTATION = 120;
 	public static final int SWING_VELOCITY = 4;
 	public static final int SWORD_SWING_VELOCITY = 5;
 	
