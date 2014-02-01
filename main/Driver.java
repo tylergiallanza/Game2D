@@ -25,7 +25,6 @@ public class Driver {
 	 * 		 FUN:
 	 *       - Add swag
 	 *       - Add enemies
-	 *       - Add sword damage
 	 *       - Add Don Quixote mode
 	 *       	- Windmill
 	 *       	- Enemies
@@ -62,6 +61,7 @@ public class Driver {
 	private static double y;
 	private static Player player;
 	private static Friendly friendly;
+	private static Enemy enemy;
 	public static String gameState = "start";
 	public static final int WORLDWIDTH = 3;
 	public static int WIDTH = 1200;
@@ -141,6 +141,7 @@ public class Driver {
 					System.out.println("new");
 					player = new Player(WIDTH/2,HEIGHT/2,"PNG","person3.png");
 					friendly = new Friendly(WIDTH/3,HEIGHT+500);
+					enemy = new Enemy(WIDTH/3,HEIGHT+500, "PNG", "enemy.png");
 					map = new World("NewMap"+getMaps().length);
 					gameState = "inGame";
 					break;
@@ -180,6 +181,7 @@ public class Driver {
 		updateActiveBlocks();
 		player.update();
 		friendly.update();
+		enemy.update();
 	}
 
 	private static void doRender(){
@@ -206,6 +208,7 @@ public class Driver {
 		}
 		return true;
 	}
+
 
 	private static boolean drawCharacter(Character obj) {
 		try {

@@ -118,8 +118,6 @@ public class Character extends GameObject implements Gravity, AI {
 	public static ArrayList<Character> getCharsAtPoint(int x, int y){
 		ArrayList<Character> charsHit = new ArrayList<Character>();
 		for(Character c : NPCs){
-			System.out.println(x  + "," + y);
-			System.out.println(c.xPos + "," + c.yPos);
 			if(c.isInCharacter(x, y))
 				charsHit.add(c);
 		}
@@ -128,7 +126,6 @@ public class Character extends GameObject implements Gravity, AI {
 
 	public void damage(int damage){
 		health -= damage;
-		System.out.println(damage);
 		if(health <= 0) NPCs.remove(this);
 	}
 
@@ -136,6 +133,11 @@ public class Character extends GameObject implements Gravity, AI {
 		if(x < xPos || x > xPos + width) return false;
 		if(y < yPos || y > yPos + height) return false;
 		return true;
+	}
+	
+	protected void jump(int vel){
+		yVel = vel;
+		updateGravity();
 	}
 
 }
